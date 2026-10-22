@@ -10,7 +10,6 @@
   <style>
     :root {
       --bg: #07070b;
-      --bg-2: #0d0d15;
       --card: rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.09);
       --text: #f4f4f8;
@@ -21,7 +20,6 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -102,11 +100,7 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .nav {
-      display: flex;
-      gap: 22px;
-      align-items: center;
-    }
+    .nav { display: flex; gap: 22px; align-items: center; }
     .nav a {
       color: var(--muted);
       text-decoration: none;
@@ -229,7 +223,7 @@
     .features {
       max-width: 960px;
       margin: 20px auto 0;
-      padding: 0 24px 100px;
+      padding: 0 24px 60px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 18px;
@@ -295,6 +289,99 @@
       line-height: 1.65;
     }
 
+    /* ---------- Плюсы / Преимущества ---------- */
+    .pros {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      animation: fadeUp .7s .6s ease both;
+    }
+
+    .pros-inner {
+      position: relative;
+      padding: 48px 40px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(139,92,246,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .pros-inner::before {
+      content: "";
+      position: absolute;
+      top: -60%; right: -20%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 65%);
+      pointer-events: none;
+    }
+
+    .pros-title {
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .pros-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 15.5px;
+      margin-bottom: 36px;
+    }
+
+    .pros-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px 28px;
+    }
+
+    .pros-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid transparent;
+      transition: background .25s, border-color .25s, transform .25s;
+    }
+
+    .pros-list li:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(139,92,246,0.35);
+      transform: translateX(4px);
+    }
+
+    .plus {
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 900;
+      font-size: 17px;
+      box-shadow: 0 6px 16px -6px rgba(139,92,246,0.8);
+      margin-top: 1px;
+    }
+
+    .pros-list b {
+      display: block;
+      font-size: 15.5px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: var(--text);
+    }
+
+    .pros-list span:not(.plus) {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
     /* ---------- Footer ---------- */
     footer {
       border-top: 1px solid var(--border);
@@ -328,7 +415,10 @@
       header { padding: 13px 16px; }
       .nav a:not(.btn-mini) { display: none; }
       .hero { padding: 60px 18px 40px; }
-      .features { padding: 0 18px 70px; }
+      .features { padding: 0 18px 40px; }
+      .pros { padding: 0 18px 70px; }
+      .pros-inner { padding: 32px 22px; border-radius: 18px; }
+      .pros-list { grid-template-columns: 1fr; }
       .button { padding: 14px 22px; width: 100%; justify-content: center; }
       .actions { flex-direction: column; }
     }
@@ -342,7 +432,7 @@
     </div>
     <nav class="nav">
       <a href="#features">Возможности</a>
-      <a href="#about">О проекте</a>
+      <a href="#pros">Преимущества</a>
       <a class="btn-mini" href="https://www.minecraft.net/" target="_blank" rel="noopener">Minecraft</a>
     </nav>
   </header>
@@ -366,7 +456,7 @@
         <a class="button primary" href="https://www.minecraft.net/" target="_blank" rel="noopener">
           🎮 Перейти в Minecraft
         </a>
-        <a class="button ghost" href="#features">Узнать больше →</a>
+        <a class="button ghost" href="#pros">Узнать больше →</a>
       </div>
     </section>
 
@@ -385,6 +475,59 @@
         <div class="icon">🛠️</div>
         <h3>Свои сборки</h3>
         <p>Создавай собственные игровые сборки и делись ими с друзьями.</p>
+      </div>
+    </section>
+
+    <!-- Плюсы / Преимущества -->
+    <section class="pros" id="pros">
+      <div class="pros-inner">
+        <h2 class="pros-title">Почему выбирают <span class="grad">SovaLauncher</span></h2>
+        <p class="pros-sub">Всё, что нужно для комфортной игры — в одном лаунчере.</p>
+
+        <ul class="pros-list">
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Быстрая загрузка</b>
+              <span>Игра запускается за секунды, без долгих ожиданий.</span>
+            </div>
+          </li>
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Все версии Minecraft</b>
+              <span>От старых до самых новых — переключайся в один клик.</span>
+            </div>
+          </li>
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Собственные сборки</b>
+              <span>Создавай свои модпаки и делись ими с друзьями.</span>
+            </div>
+          </li>
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Простой интерфейс</b>
+              <span>Понятно с первого запуска — без сложных настроек.</span>
+            </div>
+          </li>
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Без лишней рекламы</b>
+              <span>Ничего не мешает — только ты и игра.</span>
+            </div>
+          </li>
+          <li>
+            <span class="plus">+</span>
+            <div>
+              <b>Регулярные обновления</b>
+              <span>Лаунчер развивается вместе с Minecraft.</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
