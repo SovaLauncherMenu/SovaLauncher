@@ -17,6 +17,8 @@
       --accent: #8b5cf6;
       --accent-2: #22d3ee;
       --accent-3: #f472b6;
+      --green: #34d399;
+      --red: #f87171;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +35,6 @@
       flex-direction: column;
     }
 
-    /* Фоновые пятна */
     body::before {
       content: "";
       position: fixed;
@@ -45,7 +46,6 @@
         radial-gradient(500px 400px at 50% 50%, rgba(244,114,182,0.08), transparent 70%);
     }
 
-    /* Сетка поверх фона */
     body::after {
       content: "";
       position: fixed;
@@ -59,7 +59,114 @@
       -webkit-mask-image: radial-gradient(circle at 50% 30%, black, transparent 75%);
     }
 
-    /* ---------- Header ---------- */
+    /* ---------- Экраны ---------- */
+    .screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      animation: fadeIn .4s ease both;
+    }
+    .hidden { display: none !important; }
+
+    /* ---------- Экран входа ---------- */
+    .auth {
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 40px 32px 34px;
+      border-radius: 26px;
+      background: rgba(13,13,21,0.75);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8);
+      text-align: center;
+      animation: fadeUp .5s ease both;
+    }
+
+    .auth-logo {
+      display: inline-grid;
+      place-items: center;
+      width: 62px; height: 62px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-size: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 34px -8px rgba(139,92,246,0.9);
+    }
+
+    .auth-box h2 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      margin-bottom: 8px;
+    }
+
+    .auth-box .sub {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .field { text-align: left; margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 7px;
+      letter-spacing: 0.2px;
+    }
+    .field input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .field input::placeholder { color: #5c5c6e; }
+    .field input:focus {
+      border-color: rgba(139,92,246,0.7);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+    }
+
+    .auth-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 14px 36px -10px rgba(139,92,246,0.8);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 48px -12px rgba(139,92,246,1);
+    }
+    .auth-btn:active { transform: scale(0.98); }
+
+    .auth-note { margin-top: 18px; font-size: 12.5px; color: #5c5c6e; }
+
+    /* ---------- Шапка сайта ---------- */
     header {
       position: sticky;
       top: 0;
@@ -67,7 +174,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
+      padding: 14px 24px;
       background: rgba(7,7,11,0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -82,7 +189,6 @@
       font-size: 19px;
       letter-spacing: -0.4px;
     }
-
     .logo .owl {
       display: grid;
       place-items: center;
@@ -92,7 +198,6 @@
       font-size: 17px;
       box-shadow: 0 6px 20px -6px rgba(139,92,246,0.8);
     }
-
     .logo b {
       background: linear-gradient(90deg, #fff, #b9b9ff);
       -webkit-background-clip: text;
@@ -100,7 +205,7 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .nav { display: flex; gap: 22px; align-items: center; }
+    .nav { display: flex; gap: 18px; align-items: center; }
     .nav a {
       color: var(--muted);
       text-decoration: none;
@@ -110,15 +215,102 @@
     }
     .nav a:hover { color: var(--text); }
 
-    .nav .btn-mini {
-      padding: 9px 16px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.06);
+    /* Аватар в шапке */
+    .avatar-wrap { position: relative; }
+
+    .avatar-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
-      color: var(--text);
-      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+      user-select: none;
     }
-    .nav .btn-mini:hover { background: rgba(255,255,255,0.12); }
+    .avatar-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(139,92,246,0.45);
+    }
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+    }
+    .avatar-btn .name {
+      font-size: 14px;
+      font-weight: 600;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .avatar-btn .caret { font-size: 10px; color: var(--muted); }
+
+    /* Меню профиля */
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 230px;
+      padding: 8px;
+      border-radius: 16px;
+      background: rgba(16,16,24,0.95);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px -15px rgba(0,0,0,0.9);
+      opacity: 0;
+      transform: translateY(-8px) scale(0.97);
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      transform-origin: top right;
+    }
+    .dropdown.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .dropdown-head {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 6px;
+    }
+    .dropdown-head .n { font-weight: 700; font-size: 15px; }
+    .dropdown-head .e {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dropdown a, .dropdown button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 12px;
+      border: none;
+      background: none;
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .dropdown a:hover, .dropdown button:hover { background: rgba(255,255,255,0.07); }
+    .dropdown .danger { color: var(--red); }
+    .dropdown .danger:hover { background: rgba(248,113,113,0.1); }
 
     /* ---------- Hero ---------- */
     main { flex: 1; }
@@ -126,7 +318,7 @@
     .hero {
       max-width: 960px;
       margin: 0 auto;
-      padding: 90px 24px 60px;
+      padding: 70px 24px 50px;
       text-align: center;
     }
 
@@ -141,25 +333,24 @@
       color: #c4b5fd;
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 30px;
+      margin-bottom: 26px;
       animation: fadeUp .7s ease both;
     }
     .badge .dot {
       width: 7px; height: 7px;
       border-radius: 50%;
-      background: #22d3ee;
-      box-shadow: 0 0 10px #22d3ee;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
       animation: pulse 2s infinite;
     }
 
     h1 {
-      font-size: clamp(40px, 9vw, 78px);
-      line-height: 1.02;
+      font-size: clamp(38px, 8vw, 70px);
+      line-height: 1.04;
       font-weight: 900;
       letter-spacing: -2px;
       animation: fadeUp .7s .1s ease both;
     }
-
     h1 .grad {
       background: linear-gradient(100deg, var(--accent), var(--accent-2) 50%, var(--accent-3));
       -webkit-background-clip: text;
@@ -169,7 +360,7 @@
 
     .lead {
       max-width: 600px;
-      margin: 24px auto 0;
+      margin: 22px auto 0;
       color: var(--muted);
       font-size: 17px;
       line-height: 1.75;
@@ -181,7 +372,7 @@
       gap: 14px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 40px;
+      margin-top: 36px;
       animation: fadeUp .7s .3s ease both;
     }
 
@@ -195,9 +386,7 @@
       font-weight: 700;
       text-decoration: none;
       transition: transform .2s, box-shadow .25s, background .2s;
-      will-change: transform;
     }
-
     .button.primary {
       background: linear-gradient(135deg, var(--accent), #6366f1);
       color: #fff;
@@ -207,28 +396,22 @@
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 20px 50px -12px rgba(139,92,246,0.95);
     }
-
     .button.ghost {
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       color: var(--text);
-      backdrop-filter: blur(8px);
     }
-    .button.ghost:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-3px);
-    }
+    .button.ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
 
-    /* ---------- Карточки фич ---------- */
+    /* ---------- Карточки ---------- */
     .features {
       max-width: 960px;
-      margin: 20px auto 0;
-      padding: 0 24px 60px;
+      margin: 0 auto;
+      padding: 0 24px 50px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 18px;
     }
-
     .card {
       position: relative;
       padding: 26px 22px;
@@ -243,28 +426,7 @@
     .card:nth-child(1) { animation-delay: .35s; }
     .card:nth-child(2) { animation-delay: .45s; }
     .card:nth-child(3) { animation-delay: .55s; }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(139,92,246,0.6), transparent 40%, rgba(34,211,238,0.4));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity .25s;
-      pointer-events: none;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      background: rgba(255,255,255,0.065);
-    }
-    .card:hover::before { opacity: 1; }
-
+    .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.065); }
     .card .icon {
       display: grid;
       place-items: center;
@@ -275,117 +437,70 @@
       font-size: 21px;
       margin-bottom: 16px;
     }
+    .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
+    .card p { color: var(--muted); font-size: 14.5px; line-height: 1.65; }
 
-    .card h3 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 14.5px;
-      line-height: 1.65;
-    }
-
-    /* ---------- Плюсы / Преимущества ---------- */
+    /* ---------- Плюсы (компактно) ---------- */
     .pros {
       max-width: 960px;
       margin: 0 auto;
-      padding: 0 24px 100px;
+      padding: 0 24px 80px;
       animation: fadeUp .7s .6s ease both;
     }
 
     .pros-inner {
-      position: relative;
-      padding: 48px 40px;
-      border-radius: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 22px 20px;
+      border-radius: 18px;
       background: linear-gradient(180deg, rgba(139,92,246,0.08), rgba(255,255,255,0.02));
       border: 1px solid var(--border);
-      overflow: hidden;
     }
 
-    .pros-inner::before {
-      content: "";
-      position: absolute;
-      top: -60%; right: -20%;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 65%);
-      pointer-events: none;
-    }
-
-    .pros-title {
-      font-size: clamp(26px, 5vw, 38px);
-      font-weight: 900;
-      letter-spacing: -1px;
+    .pros-inner h2 {
+      width: 100%;
       text-align: center;
-      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
     }
 
-    .pros-sub {
-      text-align: center;
-      color: var(--muted);
-      font-size: 15.5px;
-      margin-bottom: 36px;
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      transition: background .2s, border-color .2s, transform .2s;
     }
-
-    .pros-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px 28px;
+    .chip:hover {
+      background: rgba(139,92,246,0.15);
+      border-color: rgba(139,92,246,0.4);
+      transform: translateY(-2px);
     }
-
-    .pros-list li {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid transparent;
-      transition: background .25s, border-color .25s, transform .25s;
-    }
-
-    .pros-list li:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(139,92,246,0.35);
-      transform: translateX(4px);
-    }
-
-    .plus {
-      flex-shrink: 0;
+    .chip .plus {
       display: grid;
       place-items: center;
-      width: 30px; height: 30px;
-      border-radius: 9px;
+      width: 20px; height: 20px;
+      border-radius: 6px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: #fff;
+      font-size: 13px;
       font-weight: 900;
-      font-size: 17px;
-      box-shadow: 0 6px 16px -6px rgba(139,92,246,0.8);
-      margin-top: 1px;
-    }
-
-    .pros-list b {
-      display: block;
-      font-size: 15.5px;
-      font-weight: 700;
-      margin-bottom: 3px;
-      color: var(--text);
-    }
-
-    .pros-list span:not(.plus) {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
     }
 
     /* ---------- Footer ---------- */
     footer {
       border-top: 1px solid var(--border);
-      padding: 26px 24px;
+      padding: 24px;
       text-align: center;
       color: #66667a;
       font-size: 13.5px;
@@ -393,10 +508,13 @@
     }
     footer b { color: #9b9bab; }
 
-    /* ---------- Анимации ---------- */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
@@ -404,136 +522,197 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-      }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
 
     /* Мобильная адаптация */
     @media (max-width: 560px) {
-      header { padding: 13px 16px; }
-      .nav a:not(.btn-mini) { display: none; }
-      .hero { padding: 60px 18px 40px; }
-      .features { padding: 0 18px 40px; }
-      .pros { padding: 0 18px 70px; }
-      .pros-inner { padding: 32px 22px; border-radius: 18px; }
-      .pros-list { grid-template-columns: 1fr; }
+      header { padding: 12px 16px; }
+      .nav a:not(.avatar-btn) { display: none; }
+      .hero { padding: 50px 18px 36px; }
+      .features { padding: 0 18px 36px; }
+      .pros { padding: 0 18px 60px; }
+      .pros-inner { padding: 18px 14px; gap: 8px; }
+      .chip { font-size: 12.5px; padding: 7px 12px; }
       .button { padding: 14px 22px; width: 100%; justify-content: center; }
       .actions { flex-direction: column; }
+      .avatar-btn .name { display: none; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <span class="owl">🦉</span>
-      <b>SovaLauncher</b>
+
+  <!-- ========== ЭКРАН ВХОДА ========== -->
+  <div class="screen auth" id="authScreen">
+    <div class="auth-box">
+      <div class="auth-logo">🦉</div>
+      <h2>Добро пожаловать</h2>
+      <p class="sub">Войди в SovaLauncher, чтобы начать играть</p>
+
+      <div class="field">
+        <label for="nick">Никнейм</label>
+        <input id="nick" type="text" placeholder="Steve" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="pass">Пароль</label>
+        <input id="pass" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+
+      <button class="auth-btn" id="loginBtn">Войти →</button>
+      <p class="auth-note">Это демо-вход. Данные не отправляются на сервер.</p>
     </div>
-    <nav class="nav">
-      <a href="#features">Возможности</a>
-      <a href="#pros">Преимущества</a>
-      <a class="btn-mini" href="https://www.minecraft.net/" target="_blank" rel="noopener">Minecraft</a>
-    </nav>
-  </header>
+  </div>
 
-  <main>
-    <section class="hero">
-      <div class="badge"><span class="dot"></span> Официальный лаунчер</div>
+  <!-- ========== ОСНОВНОЙ САЙТ ========== -->
+  <div class="screen hidden" id="mainScreen">
 
-      <h1>
-        Твой Minecraft.<br>
-        <span class="grad">Твои правила.</span>
-      </h1>
-
-      <p class="lead">
-        Добро пожаловать на официальный сайт SovaLauncher.
-        Удобный запуск Minecraft, управление версиями
-        и создание собственных сборок — в одном месте.
-      </p>
-
-      <div class="actions">
-        <a class="button primary" href="https://www.minecraft.net/" target="_blank" rel="noopener">
-          🎮 Перейти в Minecraft
-        </a>
-        <a class="button ghost" href="#pros">Узнать больше →</a>
+    <header>
+      <div class="logo">
+        <span class="owl">🦉</span>
+        <b>SovaLauncher</b>
       </div>
-    </section>
 
-    <section class="features" id="features">
-      <div class="card">
-        <div class="icon">⚡</div>
-        <h3>Быстрый запуск</h3>
-        <p>Мгновенная загрузка игры и минимум лишних кликов. Ты в деле за секунды.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🧩</div>
-        <h3>Управление версиями</h3>
-        <p>Переключайся между версиями Minecraft и модами без лишней возни.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🛠️</div>
-        <h3>Свои сборки</h3>
-        <p>Создавай собственные игровые сборки и делись ими с друзьями.</p>
-      </div>
-    </section>
+      <nav class="nav">
+        <a href="#features">Возможности</a>
+        <a href="#pros">Преимущества</a>
 
-    <!-- Плюсы / Преимущества -->
-    <section class="pros" id="pros">
-      <div class="pros-inner">
-        <h2 class="pros-title">Почему выбирают <span class="grad">SovaLauncher</span></h2>
-        <p class="pros-sub">Всё, что нужно для комфортной игры — в одном лаунчере.</p>
+        <div class="avatar-wrap">
+          <div class="avatar-btn" id="avatarBtn">
+            <div class="avatar" id="avatarLetter">S</div>
+            <span class="name" id="headerName">Steve</span>
+            <span class="caret">▼</span>
+          </div>
 
-        <ul class="pros-list">
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Быстрая загрузка</b>
-              <span>Игра запускается за секунды, без долгих ожиданий.</span>
+          <div class="dropdown" id="dropdown">
+            <div class="dropdown-head">
+              <div class="n" id="dropName">Steve</div>
+              <div class="e" id="dropEmail">player@sovalauncher.ru</div>
             </div>
-          </li>
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Все версии Minecraft</b>
-              <span>От старых до самых новых — переключайся в один клик.</span>
-            </div>
-          </li>
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Собственные сборки</b>
-              <span>Создавай свои модпаки и делись ими с друзьями.</span>
-            </div>
-          </li>
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Простой интерфейс</b>
-              <span>Понятно с первого запуска — без сложных настроек.</span>
-            </div>
-          </li>
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Без лишней рекламы</b>
-              <span>Ничего не мешает — только ты и игра.</span>
-            </div>
-          </li>
-          <li>
-            <span class="plus">+</span>
-            <div>
-              <b>Регулярные обновления</b>
-              <span>Лаунчер развивается вместе с Minecraft.</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-  </main>
+            <a href="#">👤 Мой профиль</a>
+            <a href="#">⚙️ Настройки</a>
+            <a href="#">📦 Мои сборки</a>
+            <button class="danger" id="logoutBtn">🚪 Выйти</button>
+          </div>
+        </div>
+      </nav>
+    </header>
 
-  <footer id="about">
-    © 2026 <b>SovaLauncher</b>. Все права защищены.
-  </footer>
+    <main>
+      <section class="hero">
+        <div class="badge"><span class="dot"></span> Официальный лаунчер</div>
+
+        <h1>
+          Твой Minecraft.<br>
+          <span class="grad">Твои правила.</span>
+        </h1>
+
+        <p class="lead">
+          Добро пожаловать на официальный сайт SovaLauncher.
+          Удобный запуск Minecraft, управление версиями
+          и создание собственных сборок — в одном месте.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="https://www.minecraft.net/" target="_blank" rel="noopener">
+            🎮 Перейти в Minecraft
+          </a>
+          <a class="button ghost" href="#pros">Узнать больше →</a>
+        </div>
+      </section>
+
+      <section class="features" id="features">
+        <div class="card">
+          <div class="icon">⚡</div>
+          <h3>Быстрый запуск</h3>
+          <p>Мгновенная загрузка игры и минимум лишних кликов. Ты в деле за секунды.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧩</div>
+          <h3>Управление версиями</h3>
+          <p>Переключайся между версиями Minecraft и модами без лишней возни.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🛠️</div>
+          <h3>Свои сборки</h3>
+          <p>Создавай собственные игровые сборки и делись ими с друзьями.</p>
+        </div>
+      </section>
+
+      <!-- Плюсы (компактно) -->
+      <section class="pros" id="pros">
+        <div class="pros-inner">
+          <h2>Почему выбирают <span class="grad">SovaLauncher</span></h2>
+
+          <span class="chip"><span class="plus">+</span> Быстрая загрузка</span>
+          <span class="chip"><span class="plus">+</span> Все версии Minecraft</span>
+          <span class="chip"><span class="plus">+</span> Свои сборки</span>
+          <span class="chip"><span class="plus">+</span> Простой интерфейс</span>
+          <span class="chip"><span class="plus">+</span> Без рекламы</span>
+          <span class="chip"><span class="plus">+</span> Обновления</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 <b>SovaLauncher</b>. Все права защищены.
+    </footer>
+  </div>
+
+  <script>
+    const authScreen = document.getElementById('authScreen');
+    const mainScreen = document.getElementById('mainScreen');
+    const nickInput  = document.getElementById('nick');
+    const passInput  = document.getElementById('pass');
+    const loginBtn   = document.getElementById('loginBtn');
+
+    const avatarBtn   = document.getElementById('avatarBtn');
+    const avatarLetter= document.getElementById('avatarLetter');
+    const headerName  = document.getElementById('headerName');
+    const dropName    = document.getElementById('dropName');
+    const dropEmail   = document.getElementById('dropEmail');
+    const dropdown    = document.getElementById('dropdown');
+    const logoutBtn   = document.getElementById('logoutBtn');
+
+    /* ---- Вход ---- */
+    function login() {
+      const nick = nickInput.value.trim() || 'Steve';
+
+      // Ставим данные в профиль
+      avatarLetter.textContent = nick.charAt(0).toUpperCase();
+      headerName.textContent = nick;
+      dropName.textContent = nick;
+      dropEmail.textContent = nick.toLowerCase() + '@sovalauncher.ru';
+
+      // Переключаем экраны
+      authScreen.classList.add('hidden');
+      mainScreen.classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    loginBtn.addEventListener('click', login);
+    passInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+
+    /* ---- Меню профиля ---- */
+    avatarBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', e => {
+      if (!dropdown.contains(e.target) && !avatarBtn.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    /* ---- Выход ---- */
+    logoutBtn.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      mainScreen.classList.add('hidden');
+      authScreen.classList.remove('hidden');
+      passInput.value = '';
+    });
+  </script>
 </body>
 </html>
